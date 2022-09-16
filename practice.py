@@ -3,6 +3,7 @@ import numpy as np
 import pandas
 from itertools import product
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 def avatarcsvloader(pathrest, filename, givenpath ='C:/Users/endyd/OneDrive/문서/ACTVERSE/AVATAR_DATA_SET-20220913T084458Z-001/AVATAR_DATA_SET/'):
     fullname = givenpath+pathrest+filename+'.csv'
