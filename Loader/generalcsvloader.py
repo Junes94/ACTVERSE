@@ -14,5 +14,12 @@ def generalcsvloader(pathrest,filename,ndims,trackingpoints,customcolnames=None)
         columnames = customcolnames
 
     output = pd.read_csv(fullname,names=columnames)
+    # import tkinter
+    # from tkinter import filedialog
+    #
+    # tkinter.Tk().withdraw()  # prevents an empty tkinter window from appearing
+    #
+    # folder_path = filedialog.askdirectory()
+
 
     return output
