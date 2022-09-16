@@ -2,6 +2,7 @@ import math
 import numpy as np
 import pandas
 from itertools import product
+import matplotlib.pyplot as plt
 
 def avatarcsvloader(pathrest, filename, givenpath ='C:/Users/endyd/OneDrive/문서/ACTVERSE/AVATAR_DATA_SET-20220913T084458Z-001/AVATAR_DATA_SET/'):
     fullname = givenpath+pathrest+filename+'.csv'
@@ -27,23 +28,22 @@ def avatarcsvloader(pathrest, filename, givenpath ='C:/Users/endyd/OneDrive/문�
         return output
 
 # functions to try
-# V body center speed
+# V body center movement & Total movement(to use for freezing analysis)
 # head angle
-# V Total speed (to use for freezing analysis)
 # V Total body length (exploration stretched posture)
 
 def bodylength(dataframe):
     workingframe = dataframe.loc[:,['Nose_x','Anus_x','Nose_y','Anus_y','Nose_z','Anus_z']]
-    length = math.sqrt(((workingframe.iloc[:,1]-workingframe.iloc[:,2])**2 +(workingframe.iloc[:,3]-workingframe.iloc[:,4])**2 + (workingframe.iloc[:,5]-workingframe.iloc[:,6])**2))
+    length = np.sqrt(((workingframe.iloc[:,0]-workingframe.iloc[:,1])**2 + (workingframe.iloc[:,2]-workingframe.iloc[:,3])**2 + (workingframe.iloc[:,4]-workingframe.iloc[:,5])**2))
     return length
 
 
 def movement(dataframe, coi=None, foi=None):
     # try:
-    #     (type(coi) == list) & (type(foi) == list)
-    # except KeyError(key):
-    #     print('Columns and frames of interest must be a list')
-    # wanted to check whether the coi and foi where list beforehand; does not print; instead raised KeyError, but cannot catch that either
+    #     #     (type(coi) == list) & (type(foi) == list)
+    #     # except KeyError(key):
+    #     #     print('Columns and frames of interest must be a list')
+    #     # wanted to check whether the coi and foi where list beforehand; does not print; instead raised KeyError, but cannot catch that either
     if coi is None:
         coi = ['Bodycenter_x', 'Bodycenter_y', 'Bodycenter_z']
     if foi is None:
@@ -58,4 +58,17 @@ def movement(dataframe, coi=None, foi=None):
     distance = np.sqrt(np.sum(np.square(difference),axis=1))
     return distance
 
-# def angle
+# def angle(dataframe):
+
+testfile = avatarcsvloader('1.OFT(WT-N=50)/raw/','H1.mat.csv_new')
+testlength = bodylength(testfile)
+testtotalmovement = movement(testfile)
+testbodymovement = movement(testfile,coi=['Bodycenter_x','Bodycenter_y','Bodycenter_z'])
+
+fig, axs = plt.subplots(3)
+axs[0].plot(testlength)
+axs[0].set_title('Body Length')
+axs[1].plot(testtotalmovement)
+axs[1].set_title('Total movement (bases for freezing analysis)')
+axs[2].plot(testbodymovement)
+axs[2].set_title('Body center movement (bases for speed analysis)')
