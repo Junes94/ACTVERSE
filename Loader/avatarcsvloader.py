@@ -1,8 +1,19 @@
 import pandas
 from itertools import product
 
-def avatarcsvloader(pathrest, filename, givenpath ='C:/Users/endyd/OneDrive/문서/ACTVERSE/AVATAR_DATA_SET-20220913T084458Z-001/AVATAR_DATA_SET/'):
-    fullname = givenpath+pathrest+filename+'.csv'
+def avatarcsvloader(path, filename):
+    """
+    Function that loads csv files from AVATAR system.
+    Bodypart name - 'Nose', 'Head', 'Anus', 'Bodycenter', 'RightFoot', 'LeftFoot', 'Righthand', 'Lefthand', 'Tailtip'
+    dimensions - x, y, z
+    Importing file must have 27 columns.
+
+    :param path: path
+    :param filename: filename excluding extention
+    :return: Pandas dataframe
+    """
+
+    fullname = path+filename+'.csv'
     # columnames = ['Nose_x', 'Nose_y', 'Nose_z', 'Head_x', 'Head_y', 'Head_z', 'Anus_x', 'Anus_y', 'Anus_z', 'Body_x', 'Body_y', 'Body_z', 'Leftfoot_x',
     #               'Leftfoot_y', 'Leftfoot_z', 'RightFoot_x', 'RightFoot_y', 'RightFoot_z', 'Lefthand_x', 'Lefthand_y', 'Lefthand_z', 'Righthand_x',
     #               'Righthand_y', 'Righthand_z', 'Tail_x', 'Tail_y', 'Tail_z']

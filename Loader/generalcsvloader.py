@@ -1,8 +1,19 @@
 import pandas as pd
 from itertools import product
 
-def generalcsvloader(pathrest,filename,ndims,trackingpoints,customcolnames=None):
-    fullname = pathrest + filename + '.csv'
+def generalcsvloader(path,filename,ndims,trackingpoints,customcolnames=None):
+    """
+    Function that can load csv from sources other than AVATAR system.
+    ex)
+
+    :param path: file path
+    :param filename: file name excluding extension
+    :param ndims: number of dimensions measured. integer 0 ~ 2
+    :param trackingpoints: number of tracked bodyparts. positive integer
+    :param customcolnames: can specify column names
+    :return: pandas dataframe
+    """
+    fullname = path + filename + '.csv'
     coordnames = ['_x', '_y', '_z']
     points = [str(i) for i in range(0,trackingpoints)]
 
