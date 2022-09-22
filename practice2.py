@@ -6,5 +6,5 @@ from Loader import adv_load
 # print(data)
 
 # testdata = adv_load.Easyavatarload(mode='Avatar')
-testdata = adv_load.Easymultiload(mode='Avatar')
+testdata = adv_load.Easyfolderload('General')
 print(testdata[3])
