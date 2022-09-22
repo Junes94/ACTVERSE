@@ -6,13 +6,13 @@ import glob
 
 def Easyavatarload():
     tkinter.Tk().withdraw()  # prevents an empty tkinter window from appearing
-    folder_path = filedialog.askopenfilename()
-    tmpdf = Loader.csvloader.avatarcsvloader(folder_path)
+    folder_path = filedialog.askopenfilename() # get file path
+    tmpdf = Loader.csvloader.avatarcsvloader(folder_path) # open as avatar csv
 
     return tmpdf
 
 def Easyfolderload(mode='Avatar'):
-    tkinter.Tk().withdraw()  # prevents an empty tkinter window from appearing
+    tkinter.Tk().withdraw()
     folder_path = filedialog.askdirectory()
     csvnamelist = glob.glob(folder_path+'/*.csv')
     dataframe_list = []
@@ -31,5 +31,3 @@ def Easyfolderload(mode='Avatar'):
             tmpdf = Loader.csvloader.generalcsvloader(csvnamelist[i],ndim,tp,columlist)
             dataframe_list.append(tmpdf)
     return dataframe_list
-
-
