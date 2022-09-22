@@ -4,20 +4,6 @@ from tkinter import filedialog
 import pandas as pd
 import glob
 
-# tkinter.Tk().withdraw()  # prevents an empty tkinter window from appearing
-# folder_path = filedialog.askdirectory()
-
-# # assign dataset names
-# list_of_names = ['crime', 'username']
-#
-# # create empty list
-# dataframes_list = []
-#
-# # append datasets into the list
-# for i in range(len(list_of_names)):
-#     temp_df = pd.read_csv("./csv/" + list_of_names[i] + ".csv")
-#     dataframes_list.append(temp_df)
-
 def Easyavatarload():
     tkinter.Tk().withdraw()  # prevents an empty tkinter window from appearing
     folder_path = filedialog.askopenfilename()
