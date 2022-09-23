@@ -12,7 +12,7 @@ data = acl.load(givenpath, pathrest, filename)
 # data.columns = label
 results = acl.naming(data, label)
 data = results[0]  # Data same with the above data, but has column labels.
-label = results[1]  # list of labels which users tried to allocate into data columns.
+label_manual = results[1]  # list of labels which users tried to allocate into data columns.
 
 joint = 'head'
 xyz = ('x', 'y')
