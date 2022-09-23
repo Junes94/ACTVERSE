@@ -9,8 +9,8 @@ filename = '01.mp4.txt'
 label = None
 
 data = acl.load(givenpath, pathrest, filename)
+results = acl.labeler(data, label)
 # data.columns = label
-results = acl.naming(data, label)
 data = results[0]  # Data same with the above data, but has column labels.
 label_manual = results[1]  # list of labels which users tried to allocate into data columns.
 

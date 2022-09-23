@@ -22,7 +22,7 @@ def load(givenpath, pathrest, filename):
     return data
 
 
-def naming(data, label=None):
+def labeler(data, label=None):
     """
     This function allocates specific column names to DataFrame
     :param data: csv data file
@@ -52,6 +52,8 @@ def naming(data, label=None):
                 if avatar_tf == "Yes":  # allocate each name of joint coordinate to column as AVATAR labeling.
                     label_joint = ['nose', 'head', 'anus', 'tail', 'torso', 'LH', 'RH', 'LF', 'RF']
                     label_coord = ['x', 'y', 'z']
+                    separator = '_'
+                    label = [separator.join(label_name) for label_name in list(product(label_joint, label_coord))]
                 else:  # allocate each name of joint coordinate to column as 'joint_coordinate'.
                     msg = "How many joints and dimensions your data has.\nPlease write number only."
                     title = "Default labeling mode"
@@ -68,10 +70,9 @@ def naming(data, label=None):
                         title = "Default labeling mode"
                         fieldnames = [range(joint_number)]  # joint number to be filled in by users.
                         label_joint = easygui.multenterbox(msg, title, fieldnames)
-                        label_coord = [['x', 'y', 'z'][i] for i in range(coord_number)]
-                        # Extract required amount of coord.
-                separator = '_'
-                label = [separator.join(label_name) for label_name in list(product(label_joint, label_coord))]
+                        label_coord = [['x', 'y', 'z'][i] for i in range(coord_number)]  #Extract required amount of coord.
+                        separator = '_'
+                        label = [separator.join(label_name) for label_name in list(product(label_joint, label_coord))]
 
     # Finally check whether label list is compatible with data columns.
     if label is not None:
