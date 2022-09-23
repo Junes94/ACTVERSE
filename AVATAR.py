@@ -1,12 +1,19 @@
-import function.csvload as acl
-import function.calculate_basic as ccb
+import FileManage.csvload as acl
+import Calculation.calculate_basic as ccb
+import easygui
 
 
 givenpath = 'C:/Users/MyPC/Desktop/실험실/2.실험데이터/AVATAR-SDSBD/post/22.09.13.DataSet_SI1기준/'
 pathrest = 'Control/'
 filename = '01.mp4.txt'
+label = None
 
 data = acl.load(givenpath, pathrest, filename)
+# data.columns = label
+results = acl.naming(data, label)
+data = results[0]  # Data same with the above data, but has column labels.
+label = results[1]  # list of labels which users tried to allocate into data columns.
+
 joint = 'head'
 xyz = ('x', 'y')
 
