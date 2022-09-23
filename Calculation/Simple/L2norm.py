@@ -1,5 +1,17 @@
 import numpy as np
 
+def bodylength(dataframe):
+    """
+    Calculates the body length in the current frame;
+
+    :param dataframe: must include columns with names 'Nose_x','Anus_x','Nose_y','Anus_y','Nose_z','Anus_z'
+    :return: the body length of the animal in the current frame
+    """
+    workingframe = np.diff(dataframe.loc[:,['Nose_x','Anus_x','Nose_y','Anus_y','Nose_z','Anus_z']],axis=1)
+    length = np.linalg.norm(workingframe[:,0::2],ord=2,axis=1)
+    return length
+
+
 def movement(dataframe):
     """
     Calculates the movement per frame;
@@ -16,20 +28,7 @@ def movement(dataframe):
     #     # wanted to check whether the coi and foi where list beforehand; does not print; instead raised KeyError, but cannot catch that either
 
 
-    # Come to think of it, user can just use a slice of dataframe as input and not go through this shithole.
-    # = unnecessary.
-    # if coi is None:
-    #     coi = ['Bodycenter_x', 'Bodycenter_y', 'Bodycenter_z']
-    # if foi is None:
-    #     workingframe = dataframe.loc[:, coi]
-    # else:
-    #     workingframe = dataframe.loc[foi, coi]
-
     workingframe = dataframe
     difference = np.diff(workingframe,axis=0)
-    # squared = np.square(difference)
-    # sumofsquared = np.sum(squared,axis=1)
-    # distance = math.sqrt(sumofsquared)
-    # distance = np.sqrt(np.sum(np.square(difference),axis=1))
     distance = np.linalg.norm(difference,axis=1)
     return distance
