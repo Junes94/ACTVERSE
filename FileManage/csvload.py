@@ -3,15 +3,14 @@ from itertools import product
 import easygui
 
 
-def load(givenpath, pathrest, filename):
+def load(path, filename):
     """
     This function import AVATAR csv file as a DataFrame
-    :param givenpath: the rest of the folder path
-    :param pathrest: folder outside the csv file
+    :param path: The folder path
     :param filename: csv file name
     :return: DataFrame of csv file
     """
-    fullname = givenpath + pathrest + filename + '.csv'
+    fullname = path + filename + '.csv'
     data = pd.read_csv(fullname, header=None)
     # name indices of DataFrame to frame numbers
     index = []
@@ -37,7 +36,7 @@ def labeler(data, label=None):
         reply = easygui.buttonbox(msg, choices=choices)
         if reply == "Yes":  # If users want their data columns have name.
             msg = "Do you want to label columns manually? \n\nIf you click 'No', you can use default labeling."
-            choices = ["Yes", "No"]
+            choices = ["Yes, manually", "No, auto-labeling"]
             manual_tf = easygui.buttonbox(msg, choices=choices)
             if manual_tf == "Yes":
                 msg = "Enter data column names you want to assign."
@@ -46,7 +45,7 @@ def labeler(data, label=None):
                 label = easygui.multenterbox(msg, title, fieldnames)
             else:  # if users want to use default mode for labels.
                 msg = "Is your data from AVATAR, having 27 columns?"
-                title = "Default labeling mode"
+                title = "Auto-labeling mode"
                 choices = ["Yes", "No"]
                 avatar_tf = easygui.buttonbox(msg, title, choices=choices)
                 if avatar_tf == "Yes":  # allocate each name of joint coordinate to column as AVATAR labeling.
@@ -56,12 +55,12 @@ def labeler(data, label=None):
                     label = [separator.join(label_name) for label_name in list(product(label_joint, label_coord))]
                 else:  # allocate each name of joint coordinate to column as 'joint_coordinate'.
                     msg = "How many joints and dimensions your data has.\nPlease write number only."
-                    title = "Default labeling mode"
                     fieldnames = ["Number of joints", "Number of dimensions(x,y,z)"]
                     # users write down the number of joints and coord.
                     label_number = easygui.multenterbox(msg, title, fieldnames)
                     joint_number = int(label_number[0])
                     coord_number = int(label_number[1])
+                    label_coord = [['x', 'y', 'z'][i] for i in range(coord_number)]
                     joint_numbering = [xx + 1 for xx in list(range(joint_number))]
                     joint_numbering2 = [str(x) for x in joint_numbering]
                     if coord_number > 3:
@@ -69,19 +68,21 @@ def labeler(data, label=None):
                         pass
                     else:
                         msg = "Enter joints name your data has.\n\n For example, nose, head, ..."
-                        title = "Default labeling mode"
                         # joint number to be filled in by users.
                         fieldnames = ['#'.join(x) for x in list(product(['Joint'], joint_numbering2))]
                         label_joint = easygui.multenterbox(msg, title, fieldnames)
-                        if len(label_joint) == sum(x is not "" for x in label_joint):  # There should be no blank.
-                            # Extract required amount of coord.
-                            label_coord = [['x', 'y', 'z'][i] for i in range(coord_number)]
-                            if label_joint is not None:
-                                separator = '_'
-                                label = [separator.join(label_name) for label_name in list(product(label_joint, label_coord))]
-                        else:
-                            easygui.msgbox("There should be no blank in the joint list.", "Warning")
-                            pass
+                        if label_joint is not None:
+                            if len(label_joint) == sum(x is not "" for x in label_joint):  # There should be no blank.
+                                # Extract required amount of coord.
+                                if len(label_joint) == len(set(label_joint)):  # There should be no duplicate elements.
+                                    separator = '_'
+                                    label = [separator.join(label_name) for label_name in list(product(label_joint, label_coord))]
+                                else:
+                                    easygui.msgbox("All joint names need to be different.", "Warning")
+                                    pass
+                            else:
+                                easygui.msgbox("There should be no blank in the joint list.", "Warning")
+                                pass
 
     # Finally check whether label list is compatible with data columns.
     if label is not None:
@@ -93,10 +94,10 @@ def labeler(data, label=None):
                     data.columns = label
                     pass
                 else:
-                    easygui.msgbox("The number of manual labels must match the number of columns", "Warning")
+                    easygui.msgbox("The number of manual labels must match the number of data columns.", "Warning")
                     pass
             else:
-                easygui.msgbox("All column or joint names need to be different.", "Warning")
+                easygui.msgbox("All column names need to be different.", "Warning")
                 pass
         else:
             easygui.msgbox("There should be no blank element in the label list.", "Warning")
