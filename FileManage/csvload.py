@@ -1,33 +1,48 @@
 import pandas as pd
 from itertools import product
 import easygui
+import os
 
 
-def load(path, filename):
+def load(path=None, filelist_path=None):
     """
     This function import AVATAR csv file as a DataFrame
     :param path: The folder path
-    :param filename: csv file name
-    :return: DataFrame of csv file
+    :param filelist_path: csv file name list (ex. ["C/Users/~~/mouse1.csv", "C/Users/~~/mouse2.csv"]
+    :return: [0]=data list, [1]=folder name analyzed, [2]=file name analyzed
     """
-    fullname = path + filename + '.csv'
-    data = pd.read_csv(fullname, header=None)
-    # name indices of DataFrame to frame numbers
-    index = []
-    for index_num in range(1, data.shape[0] + 1):
-        index.append(f'{index_num}')
-    data.set_axis(index, axis='index', inplace=True)
+    if path is None:
+        path = easygui.diropenbox(title="Choose your data folder.")
 
-    return data
+    if filelist_path is None:
+        filelist_path = easygui.fileopenbox(title="Select data files.", default=path, filetypes="*.csv", multiple=True)
+
+    # Name indices of DataFrame to frame numbers.
+    data_list = []
+    data_namelist = []
+    for i in range(len(filelist_path)):
+        data_individual = pd.read_csv(filelist_path[i], header=None)
+        index = list(range(1, data_individual.shape[0] + 1))
+        data_individual.set_axis(index, axis='index', inplace=True)
+        data_individual.index.name = "frame"
+        data_list.append(data_individual)
+
+        # Store data file name into a list.
+        filename = os.path.basename(filelist_path[i])  # Extract only file name(not total path).
+        data_namelist.append(filename)
+
+    print(path)
+    return data_list, path, data_namelist
 
 
-def labeler(data, label=None):
+def labeler(results, label=None):
     """
     This function allocates specific column names to DataFrame
-    :param data: csv data file
+    :param results: csv data file list [DataFrame, DataFrame, ...]
     :param label: specific column names user wants to define
     :return: DataFrame with name defined
     """
+    data = results[0][0]  # First dataframe of a list is used for labeling columns.
     if label is not None:  # If users enter 'label' already.
         pass
     else:  # If 'label' is empty.
@@ -76,7 +91,8 @@ def labeler(data, label=None):
                                 # Extract required amount of coord.
                                 if len(label_joint) == len(set(label_joint)):  # There should be no duplicate elements.
                                     separator = '_'
-                                    label = [separator.join(label_name) for label_name in list(product(label_joint, label_coord))]
+                                    label = [separator.join(label_name) for label_name in
+                                             list(product(label_joint, label_coord))]
                                 else:
                                     easygui.msgbox("All joint names need to be different.", "Warning")
                                     pass
@@ -88,13 +104,20 @@ def labeler(data, label=None):
     if label is not None:
         if len(label) == sum(x is not "" for x in label):  # There should be no blank.
             if len(label) == len(set(label)):  # There should be no duplicate elements.
-                if len(data.columns) == len(label):  # The number of label should be same with that of columns.
+                success_number = 0
+                for filenumber in range(len(results[2])):
+                    if len(results[0][filenumber].columns) == len(
+                            label):  # The number of label should be same with that of columns.
+                        results[0][filenumber].columns = label  # Execute column labeling
+                    else:
+                        easygui.msgbox(f'{results[2][filenumber]} '
+                                       f'has different column numbers with manual label numbers.', "Warning")
+                        pass
+                        break
+                    success_number = success_number + 1
+                if success_number == range(len(results[2])):
                     easygui.msgbox("Your data columns have labels now! \n\nIf you want to reset all labels, "
                                    "\nplease delete the second parameter of this function.", "Success")
-                    data.columns = label
-                    pass
-                else:
-                    easygui.msgbox("The number of manual labels must match the number of data columns.", "Warning")
                     pass
             else:
                 easygui.msgbox("All column names need to be different.", "Warning")
@@ -104,4 +127,4 @@ def labeler(data, label=None):
             pass
 
     print("data columns name:", data.columns.tolist())
-    return data, label
+    return results, label
