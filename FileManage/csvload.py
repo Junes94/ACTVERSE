@@ -9,7 +9,7 @@ def load(path=None, filelist_path=None):
     This function import AVATAR csv file as a DataFrame
     :param path: The folder path
     :param filelist_path: csv file name list (ex. ["C/Users/~~/mouse1.csv", "C/Users/~~/mouse2.csv"]
-    :return: [0]=data list, [1]=folder name analyzed, [2]=file name analyzed
+    :return: dictionary -> [0]=data list, [1]=folder name analyzed, [2]=file name analyzed
     """
     if path is None:
         path = easygui.diropenbox(title="Choose your data folder.")
@@ -32,7 +32,8 @@ def load(path=None, filelist_path=None):
         data_namelist.append(filename)
 
     print(path)
-    return data_list, path, data_namelist
+    results = dict(data_list=data_list, path=path, data_namelist=data_namelist)
+    return results
 
 
 def labeler(results, label=None):
@@ -40,9 +41,12 @@ def labeler(results, label=None):
     This function allocates specific column names to DataFrame
     :param results: csv data file list [DataFrame, DataFrame, ...]
     :param label: specific column names user wants to define
-    :return: DataFrame with name defined
+    :return: dictionary
     """
-    data = results[0][0]  # First dataframe of a list is used for labeling columns.
+    data_list = results['data_list']
+    data = data_list[0]  # First dataframe of a list is used for labeling columns.
+    data_namelist = results['data_namelist']
+
     if label is not None:  # If users enter 'label' already.
         pass
     else:  # If 'label' is empty.
@@ -105,17 +109,17 @@ def labeler(results, label=None):
         if len(label) == sum(x is not "" for x in label):  # There should be no blank.
             if len(label) == len(set(label)):  # There should be no duplicate elements.
                 success_number = 0
-                for filenumber in range(len(results[2])):
-                    if len(results[0][filenumber].columns) == len(
+                for filenumber in range(len(data_namelist)):
+                    if len(data_list[filenumber].columns) == len(
                             label):  # The number of label should be same with that of columns.
-                        results[0][filenumber].columns = label  # Execute column labeling
+                        data_list[filenumber].columns = label  # Execute column labeling
                     else:
-                        easygui.msgbox(f'{results[2][filenumber]} '
+                        easygui.msgbox(f'{data_namelist[filenumber]} '
                                        f'has different column numbers with manual label numbers.', "Warning")
                         pass
                         break
                     success_number = success_number + 1
-                if success_number == range(len(results[2])):
+                if success_number == range(len(data_namelist)):
                     easygui.msgbox("Your data columns have labels now! \n\nIf you want to reset all labels, "
                                    "\nplease delete the second parameter of this function.", "Success")
                     pass
@@ -127,4 +131,6 @@ def labeler(results, label=None):
             pass
 
     print("data columns name:", data.columns.tolist())
-    return results, label
+    results['data_list'] = data_list  # upgrade data with labels.
+    results['label'] = label  # add label key to dictionary.
+    return results
