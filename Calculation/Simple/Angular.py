@@ -46,8 +46,8 @@ def point2lineangle(df):
 
     # fix at origin
     thirdpoint = int(df.shape[1]/3)
-    df1 = df.iloc[:,0:thirdpoint] - df.iloc[:,thirdpoint:2*thirdpoint]
-    df2 = df.iloc[:,2*thirdpoint:] - df.iloc[:,thirdpoint:2*thirdpoint]
+    df1 = df.iloc[:,0:thirdpoint] - df.iloc[:,thirdpoint:2*thirdpoint].values
+    df2 = df.iloc[:,2*thirdpoint:] - df.iloc[:,thirdpoint:2*thirdpoint].values
 
     # np.sum(df1.values*df2.values,axis=1) acts as row-wise dot product
     rwdot = lambda x, y: np.sum(x * y, axis=1)
@@ -57,6 +57,6 @@ def point2lineangle(df):
     # = arccos(dotp of a&b / dotp of (sqrt(dotp of a&a) & sqrt(dotp of b&b)))
 
 
-    angle = pd.DataFrame(np.arccos(rwdot(df1,df2) / rwdot(np.sqrt(rwdot(df1,df1)), np.sqrt(rwdot(df2,df2)))))
+    angle = pd.DataFrame(np.arccos(rwdot(df1.values, df2.values) / (np.sqrt(rwdot(df1.values, df1.values)) * np.sqrt(rwdot(df2.values, df2.values)))))
 
     return angle
