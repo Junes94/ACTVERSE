@@ -24,7 +24,7 @@ def movement(dataframe):
     # try:
     #     #     (type(coi) == list) & (type(foi) == list)
     #     # except KeyError(key):
-    #     #     print('Columns and frames of interest must be a list')
+    #     #     raise KeyError('Columns and frames of interest must be a list')
     #     # wanted to check whether the coi and foi where list beforehand; does not print; instead raised KeyError, but cannot catch that either
 
 
