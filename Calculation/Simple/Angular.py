@@ -40,7 +40,7 @@ def point2angleaxis(df):
     :param df: input dataframe. Number of columns must be 6(3d) or 4(2d). First 3 or 2 columns (depending on the # of dimensions) are treated as the origin
     :return: dataframe of the angles in regards to each axis.
     """
-
+    # need debugging on situations where x / y / z value is out of range
     # Align to origin
     halfpoint = int(df.shape[1] / 2)
     reposit = df.iloc[:, halfpoint:] - df.iloc[:, 0:halfpoint].values
