@@ -11,13 +11,12 @@ def load(path=None, filelist_path=None):
     :param filelist_path: csv file name list (ex. ["C/Users/~~/mouse1.csv", "C/Users/~~/mouse2.csv"]
     :return: dictionary -> [0]=data list, [1]=folder name analyzed, [2]=file name analyzed
     """
-    if path is None:
-        path = easygui.diropenbox(title="Choose your data folder.")
 
     if filelist_path is None:
         filelist_path = easygui.fileopenbox(title="Select data files.", default=path, filetypes="*.csv", multiple=True)
+    path = os.path.dirname(filelist_path[0])  # total path containing data files.
 
-    # Name indices of DataFrame to frame numbers.
+    # Naming indices of DataFrame as frame numbers.
     data_list = []
     data_namelist = []
     for i in range(len(filelist_path)):
@@ -57,7 +56,7 @@ def labeler(results, label=None):
             msg = "Do you want to label columns manually? \n\nIf you click 'No', you can use default labeling."
             choices = ["Yes, manually", "No, auto-labeling"]
             manual_tf = easygui.buttonbox(msg, choices=choices)
-            if manual_tf == "Yes":
+            if manual_tf == "Yes, manually":
                 msg = "Enter data column names you want to assign."
                 title = "Manual labeling mode"
                 fieldnames = data.columns.tolist()  # list of the original names of columns.
@@ -68,7 +67,7 @@ def labeler(results, label=None):
                 choices = ["Yes", "No"]
                 avatar_tf = easygui.buttonbox(msg, title, choices=choices)
                 if avatar_tf == "Yes":  # allocate each name of joint coordinate to column as AVATAR labeling.
-                    label_joint = ['nose', 'head', 'anus', 'tail', 'torso', 'LH', 'RH', 'LF', 'RF']
+                    label_joint = ['nose', 'head', 'anus', 'torso', 'LH', 'RH', 'LF', 'RF', 'tail']
                     label_coord = ['x', 'y', 'z']
                     separator = '_'
                     label = [separator.join(label_name) for label_name in list(product(label_joint, label_coord))]
@@ -77,32 +76,35 @@ def labeler(results, label=None):
                     fieldnames = ["Number of joints", "Number of dimensions(x,y,z)"]
                     # users write down the number of joints and coord.
                     label_number = easygui.multenterbox(msg, title, fieldnames)
-                    joint_number = int(label_number[0])
-                    coord_number = int(label_number[1])
-                    label_coord = [['x', 'y', 'z'][i] for i in range(coord_number)]
-                    joint_numbering = [xx + 1 for xx in list(range(joint_number))]
-                    joint_numbering2 = [str(x) for x in joint_numbering]
-                    if coord_number > 3:
-                        easygui.msgbox("Data dimension could not exceed 3.", "Warning")
-                        pass
-                    else:
-                        msg = "Enter joints name your data has.\n\n For example, nose, head, ..."
-                        # joint number to be filled in by users.
-                        fieldnames = ['#'.join(x) for x in list(product(['Joint'], joint_numbering2))]
-                        label_joint = easygui.multenterbox(msg, title, fieldnames)
-                        if label_joint is not None:
-                            if len(label_joint) == sum(x is not "" for x in label_joint):  # There should be no blank.
-                                # Extract required amount of coord.
-                                if len(label_joint) == len(set(label_joint)):  # There should be no duplicate elements.
-                                    separator = '_'
-                                    label = [separator.join(label_name) for label_name in
-                                             list(product(label_joint, label_coord))]
+                    if label_number is not None:
+                        joint_number = int(label_number[0])
+                        coord_number = int(label_number[1])
+                        label_coord = [['x', 'y', 'z'][i] for i in range(coord_number)]
+                        joint_numbering = [xx + 1 for xx in list(range(joint_number))]
+                        joint_numbering2 = [str(x) for x in joint_numbering]
+                        if coord_number > 3:
+                            easygui.msgbox("Data dimension could not exceed 3.", "Warning")
+                            pass
+                        else:
+                            msg = "Enter joints name your data has.\n\n For example, nose, head, ..."
+                            # joint number to be filled in by users.
+                            fieldnames = ['#'.join(x) for x in list(product(['Joint'], joint_numbering2))]
+                            label_joint = easygui.multenterbox(msg, title, fieldnames)
+                            if label_joint is not None:
+                                if len(label_joint) == sum(x is not "" for x in label_joint):  # There should be no blank.
+                                    # Extract required amount of coord.
+                                    if len(label_joint) == len(set(label_joint)):  # There should be no duplicate elements.
+                                        separator = '_'
+                                        label = [separator.join(label_name) for label_name in
+                                                 list(product(label_joint, label_coord))]
+                                    else:
+                                        easygui.msgbox("All joint names need to be different.", "Warning")
+                                        pass
                                 else:
-                                    easygui.msgbox("All joint names need to be different.", "Warning")
+                                    easygui.msgbox("There should be no blank in the joint list.", "Warning")
                                     pass
-                            else:
-                                easygui.msgbox("There should be no blank in the joint list.", "Warning")
-                                pass
+        elif reply == "No":  # If users want their data columns don't have name.
+            label = [x for x in range(data.shape[1])]
 
     # Finally check whether label list is compatible with data columns.
     if label is not None:
