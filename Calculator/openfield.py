@@ -1,5 +1,4 @@
 import ctypes
-import numpy as np
 
 
 def vel(centerpoint):
@@ -54,8 +53,30 @@ def centerIndex(center_frame, radius=3):
     return center_index
 
 
-def walkFrameBool(velocity, vel_thres=0.2, moving_windows=7):
-    velocity_conv = velocity.rolling(moving_windows, center=True).mean()
+def walkFrameBool(torso_velocity, head_2d, torso_2d, torso_z, vel_thres=0.2, dist_thres=5, moving_windows=7):
+    """
+    This function returns mouse walking frame as a boolean values. Walk should satisfy criteria below.
+    criteria 1: Convolved velocity at each frame must exceed the value of vel_thres
+    criteria 2: Moving distance of a walking bout (from the time it rises above the value until it falls again)
+    must exceed dist_thres
+    criteria 3:
+    :param torso_velocity:
+    :param head_2d:
+    :param torso_2d:
+    :param torso_z:
+    :param vel_thres:
+    :param dist_thres:
+    :param moving_windows:
+    :return:
+    """
+    velocity_conv = torso_velocity.rolling(moving_windows, center=True).mean()
+    walk1 = velocity_conv > vel_thres
+    dd = walk1[walk1 == 1].groupby((walk1 != 1).cumsum())
+    for group_index in dd.dtype.index:
+        if velocity_conv[dd.groups[group_index]].sum() < dist_thres:
+            walk1[dd.groups[group_index]] = False
+
+
 
 
 

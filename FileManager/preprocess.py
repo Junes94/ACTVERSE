@@ -35,6 +35,6 @@ def centerPoint(data, joint1, joint2):
         for i in range(len(joint1)):
             centerpoint[i] = data.iloc[:, [joint1[i], joint2[i]]].mean(axis=1, skipna=False)
             # To make centerpoint columns names.
-            columnsName.append('Mean of ' + data.columns[joint1[i]] + ', ' + data.columns[joint2[i]])
+            columnsName.append('Mean of ' + str(data.columns[joint1[i]]) + ', ' + str(data.columns[joint2[i]]))
         centerpoint.columns = columnsName
     return centerpoint
