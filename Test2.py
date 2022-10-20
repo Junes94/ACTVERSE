@@ -34,6 +34,9 @@ for data in data_list:
     centerpoint_3d = app.centerPoint(data, joint1, joint2)  # set head-torso middle point as a body center point.
     centerpoint_2d = centerpoint_3d.iloc[:, 0:2]
     centerpoint_z = centerpoint_3d.iloc[:, [2]]
+    head_2d = data.iloc[:, 3:5]
+    torso_2d = data.iloc[:, 9:11]
+    torso_z = data.iloc[:, [11]]
     velocity_3d = cof.vel(centerpoint_3d)
     velocity_2d = cof.vel(centerpoint_2d)
     velocity_z = cof.vel(centerpoint_z)

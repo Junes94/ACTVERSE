@@ -37,7 +37,9 @@ def load(path=None, filelist_path=None):
 
 def labeler(results, label=None):
     """
-    This function allocates specific column names to DataFrame
+    This function allocates specific column names to DataFrame.
+    Be aware that when users enter their own labels in the easygui window, their formats would be string,
+    even users write down numbers (1, 2, 3, etc, ...)
     :param results: csv data file list [DataFrame, DataFrame, ...]
     :param label: specific column names user wants to define
     :return: dictionary
