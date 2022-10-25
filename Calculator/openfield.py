@@ -36,9 +36,9 @@ def rearingBool(torso_z):
     """
     This function (for AVATAR) returns boolean values at which frames a mouse rears or jumps
     :param torso_z: DataFrame of z-coordinates of a mouse
-    :return:
+    :return: (Series) bool values when a mouse rear or jumping
     """
-    rearing = torso_z > (torso_z.mean(axis=0, skipna=False) * 2)
+    rearing = torso_z.iloc[:,0] > (torso_z.iloc[:,0].mean(axis=0, skipna=False) * 2)
     return rearing
 
 
@@ -55,15 +55,24 @@ def centerFrameBool(centerpoint, radius=3):
     return center_frame
 
 
-def centerIndex(center_frame):
+def boolIndex(bool_frame):
     """
-    This function(for AVATAR) returns indices that contain True values in center_frame
-    :param center_frame: boolean results whether a mouse enters into the center zone
+    This function(for AVATAR) returns indices that contain True values in bool_frame
+    :param bool_frame: (pd.Series) boolean results (ex. 111000011111100000110)
     :return: list of indices of dataframe(center_frame that is the output of function centerFrameBool)
     """
-    center_index = center_frame.index[center_frame].tolist()
-    return center_index
+    bool_index = bool_frame.index[bool_frame].tolist()
+    return bool_index
 
+
+def boolBout(bool_frame):
+    """
+    This function makes a group of consecutive True values (ex. [1111100011111] as two groups of 1)
+    :param bool_frame: (pd.Series) boolean results (ex. 111000011111100000110)
+    :return:
+    """
+    bool_bout = bool_frame[bool_frame == 1].groupby((bool_frame != 1).cumsum())
+    return bool_bout
 
 def walkFrameBool(head_2d, torso_2d, torso_z, vel_thres=0.1, angle_thres=90, dist_thres=5):
     """
@@ -89,29 +98,26 @@ def walkFrameBool(head_2d, torso_2d, torso_z, vel_thres=0.1, angle_thres=90, dis
                                                zip(list(head_2d.columns), list(torso_2d.columns))],
                                       index=head_2d.index)
     # criteria 1
-    walk1 = torso_z < (torso_z.mean(axis=0, skipna=False) * 2)  # boolean values not rearing or jumping
+    walk1 = ~rearingBool(torso_z)  # boolean values not rearing or jumping
 
     # criteria 2
     velocity_head = (vector_head**2).sum(axis=1, skipna=False) ** (1/2)      # (dx^2+dy^2)^(1/2)
     velocity_torso = (vector_torso**2).sum(axis=1, skipna=False) ** (1/2)    # (dx^2+dy^2)^(1/2)
     walk2 = (velocity_head > vel_thres) & (velocity_torso > vel_thres)   # boolean values exceeding vel_thres
-    walk2 = pd.DataFrame(walk2)
 
     # criteria 3
-    angle_headForward = pd.DataFrame(list(map(ccb.angle_between, vector_torsoToHead.values, vector_head.values[1:, :])),
+    angle_headForward = pd.Series(list(map(ccb.angle_between, vector_torsoToHead.values, vector_head.values[1:, :])),
                                      index=list(range(2, vector_torsoToHead.shape[0] + 1))) * 180/pi
-    angle_torsoForward = pd.DataFrame(list(map(ccb.angle_between, vector_torsoToHead.values, vector_torso.values[1:, :]
+    angle_torsoForward = pd.Series(list(map(ccb.angle_between, vector_torsoToHead.values, vector_torso.values[1:, :]
                                                )), index=list(range(2, vector_torsoToHead.shape[0] + 1))) * 180/pi
     walk3 = (angle_headForward < angle_thres) & (angle_torsoForward < angle_thres)
-    walk3 = pd.DataFrame(walk3)
 
     # criteria 4
-    walk123 = walk1.iloc[:, 0] & walk2.iloc[:, 0] & walk3.iloc[:, 0]   # bools satisfying crit1,2,3 based on indices(frame)
+    walk123 = walk1 & walk2 & walk3   # bools satisfying crit1,2,3 based on indices(frame)
     walk_bout = walk123[walk123 == 1].groupby((walk123 != 1).cumsum())  # walking bout as bool values satisfying crit1,2,3
     walk4 = copy.deepcopy(walk123)
     for group_index in walk_bout.dtype.index:
         if velocity_torso[walk_bout.groups[group_index]].sum() < dist_thres:
             walk4[walk_bout.groups[group_index]] = False
 
-    walk = pd.DataFrame(walk4, columns=['walk_bool'])
-    return walk
+    return walk4

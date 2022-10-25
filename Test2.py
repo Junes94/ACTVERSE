@@ -50,7 +50,7 @@ for data in data_list:
     center_frame = cof.centerFrameBool(data_analysis_2d)  # boolean dataframe where a mouse is in center zone.
     center_duration = (lambda x: x.sum() / len(x))(center_frame)  # duration (center/total)
 
-    center_index = cof.centerIndex(center_frame)  # (list) find frame where a mouse enters the center zone.
+    center_index = cof.boolIndex(center_frame)  # (list) find frame where a mouse enters the center zone.
     center_velocity_2d = velocity_2d.loc[center_index]
     center_velocity_z = velocity_z.loc[center_index]
 
@@ -61,6 +61,12 @@ for data in data_list:
 
     # Walk analysis
     walk_frame = cof.walkFrameBool(head_2d, torso_2d, torso_z)
+    walk_index = cof.boolIndex(walk_frame)
+    walk_bout = cof.boolBout(walk_frame)
+    walk_bout_num = walk_bout.ngroups
+
+    # Center+Walk
+    centerWalk_bout =
 
     velocity_conv = velocity_2d_torso.rolling(moving_windows, center=True).mean()
     data_plot = velocity_conv[10:300]
