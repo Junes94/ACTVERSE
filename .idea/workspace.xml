@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a334547a-75a5-46d1-9a12-957acc79bab3" name="Default Changelist" comment="walking criteria final2">
-      <change afterPath="$PROJECT_DIR$/Project/SDSBD/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Project/SDSBD/params.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Project/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Project/package_june.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Calculator/openfield.py" beforeDir="false" afterPath="$PROJECT_DIR$/Calculator/openfield.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test2.py" beforeDir="false" afterPath="$PROJECT_DIR$/proj_SDSBD.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +18,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="da7536e5-ef3d-4814-903c-8f40b486bc5f" />
+        <option name="url" value="https://github.com/Junes94/ACTVERSE.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="JupyterTrust" id="aba0fa66-8b06-43f0-8fe1-79778cfab3a4" />
   <component name="MarkdownSettingsMigration">
