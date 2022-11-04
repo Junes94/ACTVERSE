@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a334547a-75a5-46d1-9a12-957acc79bab3" name="Default Changelist" comment="walking criteria final2">
+      <change afterPath="$PROJECT_DIR$/Project/SDSBD/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project/SDSBD/params.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project/package_june.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Calculator/openfield.py" beforeDir="false" afterPath="$PROJECT_DIR$/Calculator/openfield.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test2.py" beforeDir="false" afterPath="$PROJECT_DIR$/proj_SDSBD.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JupyterTrust" id="aba0fa66-8b06-43f0-8fe1-79778cfab3a4" />
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2EqDUMKKlVZDFDShHaESeVjmu6j" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\MyPC\Documents\GitHub\ACTVERSE\Plotting" />
+      <recent name="C:\Users\MyPC\Documents\GitHub\ACTVERSE\FileManage" />
+      <recent name="C:\Users\MyPC\Documents\GitHub\ACTVERSE\Calculation" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a334547a-75a5-46d1-9a12-957acc79bab3" name="Default Changelist" comment="" />
+      <created>1663314237911</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1663314237911</updated>
+      <workItem from="1663314239172" duration="13000" />
+    </task>
+    <task id="LOCAL-00001" summary="dd">
+      <created>1663918072383</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1663918072383</updated>
+    </task>
+    <task id="LOCAL-00002" summary="labeler_debug complete">
+      <created>1663927354800</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1663927354800</updated>
+    </task>
+    <task id="LOCAL-00003" summary="labeler_debug complete">
+      <created>1664012991920</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1664012991920</updated>
+    </task>
+    <task id="LOCAL-00004" summary="labeler_multifiles">
+      <created>1664100087132</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1664100087132</updated>
+    </task>
+    <task id="LOCAL-00005" summary="labeler_multifiles">
+      <created>1664182034322</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1664182034322</updated>
+    </task>
+    <task id="LOCAL-00006" summary="labeler_multifiles">
+      <created>1666007958500</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1666007958500</updated>
+    </task>
+    <task id="LOCAL-00007" summary="walking criteria ver1.">
+      <created>1666230817950</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1666230817950</updated>
+    </task>
+    <task id="LOCAL-00008" summary="walking criteria final">
+      <created>1666598200003</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1666598200003</updated>
+    </task>
+    <task id="LOCAL-00009" summary="walking criteria final2">
+      <created>1666689947895</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1666689947895</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="dd" />
+    <MESSAGE value="labeler_debug complete" />
+    <MESSAGE value="labeler_multifiles" />
+    <MESSAGE value="walking criteria ver1." />
+    <MESSAGE value="walking criteria final" />
+    <MESSAGE value="walking criteria final2" />
+    <option name="LAST_COMMIT_MESSAGE" value="walking criteria final2" />
+  </component>
+</project>

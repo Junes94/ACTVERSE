@@ -38,7 +38,7 @@ def rearingBool(torso_z):
     :param torso_z: DataFrame of z-coordinates of a mouse
     :return: (Series) bool values when a mouse rear or jumping
     """
-    rearing = torso_z.iloc[:,0] > (torso_z.iloc[:,0].mean(axis=0, skipna=False) * 2)
+    rearing = torso_z.iloc[:, 0] > (torso_z.iloc[:, 0].mean(axis=0, skipna=False) * 2)
     return rearing
 
 
@@ -47,7 +47,7 @@ def centerFrameBool(centerpoint, radius=3):
     This function(for AVATAR) returns frames when a mouse enters the center zone
     :param centerpoint: (x,y columns) DataFrame users want to calculate (must have specific columns)
     :param radius: if radius=3, center zone would be (-3,-3)~(3,3) for x, y axis
-    :return: boolean results whether a mouse enters into the center zone
+    :return: (pd.Series) boolean results whether a mouse enters into the center zone
     """
     centerpoint_x = centerpoint.iloc[:, 0]  # x coordinates of the data
     centerpoint_y = centerpoint.iloc[:, 1]  # y coordinates of the data
@@ -72,7 +72,8 @@ def boolBout(bool_frame):
     :return:
     """
     bool_bout = bool_frame[bool_frame == 1].groupby((bool_frame != 1).cumsum())
-    return bool_bout
+    return bool_bout.ngroups
+
 
 def walkFrameBool(head_2d, torso_2d, torso_z, vel_thres=0.1, angle_thres=90, dist_thres=5):
     """
@@ -88,7 +89,7 @@ def walkFrameBool(head_2d, torso_2d, torso_z, vel_thres=0.1, angle_thres=90, dis
     :param vel_thres:
     :param angle_thres: False if angle > angle_thres
     :param dist_thres: True if total distance moved at each walk bout > dist_thres
-    :return: boolean results whether a mouse walks
+    :return: (pd.Series) boolean results whether a mouse walks
     """
     # Calculate vectors
     vector_head = head_2d.diff(axis=0)
