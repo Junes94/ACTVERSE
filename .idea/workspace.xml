@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="a334547a-75a5-46d1-9a12-957acc79bab3" name="Default Changelist" comment="walking criteria final2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Calculator/openfield.py" beforeDir="false" afterPath="$PROJECT_DIR$/Calculator/openfield.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FileManager/csvload.py" beforeDir="false" afterPath="$PROJECT_DIR$/FileManager/csvload.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/package_june.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project/package_june.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proj_SDSBD.py" beforeDir="false" afterPath="$PROJECT_DIR$/proj_SDSBD.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

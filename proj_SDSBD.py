@@ -8,11 +8,12 @@ import FileManager.preprocess as app
 from Project.SDSBD import params
 import seaborn as sns
 import matplotlib
+import time
+
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 
-
-path = "C:/Users/MyPC/Desktop/실험실/아바타/ACTNOVA회사/"
+path = r'C:\Users\MyPC\Desktop\실험실\2.실험데이터\AVATAR-SDSBD\''
 # filepath = ["C:/Users/MyPC/Desktop/실험실/아바타/ACTNOVA회사/dataForTest/C_403.mp4.txt.csv"]
 results = acl.load(path)
 
@@ -33,14 +34,16 @@ end = params.end
 # Calculation
 ID = 0
 results_total = pd.DataFrame([])
+start_time = time.process_time()  # 시작 시간 저장
+
 for data in data_list:
-    results_center = ppj.Avatar(data, 'center')     # center analysis
-    results_walk = ppj.Avatar(data, 'walk')         # walking analysis
+    results_center = ppj.Avatar(data, 'center')  # center analysis
+    results_walk = ppj.Avatar(data, 'walk')  # walking analysis
 
     # rearing analysis
     centerPoint_3d = app.centerPoint(data, joint1, joint2)  # set head-torso middle point as a body center point
     centerPoint_z = centerPoint_3d.iloc[:, [2]]
-    rearing = cof.rearingBool(centerPoint_z)
+    rearing = cof.rearingBool(data)
     rearing = rearing.iloc[start:end]
     rearing_boutNum = cof.boolBout(rearing)
     results_rearing = dict(rearing_bout=rearing_boutNum)
@@ -54,7 +57,11 @@ for data in data_list:
     results_mouse = pd.DataFrame(results_center, index=[mouse])
     results_total = pd.concat([results_total, results_mouse])
 
-    # velocity_conv = velocity_2d_torso.rolling(6, center=True).mean()
-    # data_plot = velocity_conv[10:300]
-    # sns.lineplot(x=data_plot.index, y=data_plot.values)
-    # plt.show()
+results_total.to_csv(results['path']+r'\proj_SDSBD.csv')
+end_time = time.process_time()
+print(f"time elapsed : {int(round((end_time - start_time) * 1000))}ms")  # 현재시각 - 시작시간 = 실행 시간
+
+# velocity_conv = velocity_2d_torso.rolling(6, center=True).mean()
+# data_plot = velocity_conv[10:300]
+# sns.lineplot(x=data_plot.index, y=data_plot.values)
+# plt.show()

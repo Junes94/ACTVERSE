@@ -16,7 +16,6 @@ def Avatar(data, eventType):
     # basic variable settings
     start = params.start
     end = params.end
-    head_2d = data.iloc[:, 3:5]
     torso_3d = data.iloc[:, 9:12]
 
     if eventType == 'center':
@@ -38,9 +37,9 @@ def Avatar(data, eventType):
 
     # Event analysis
     if eventType == 'center':
-        event_frame = cof.centerFrameBool(coord_2d, radius)  # boolean dataframe where a mouse is in center zone.
+        event_frame = cof.centerFrameBool(data, radius)  # boolean dataframe where a mouse is in center zone.
     elif eventType == 'walk':
-        event_frame = cof.walkFrameBool(head_2d, coord_2d, coord_z, vel_thres, angle_thres, dist_thres)
+        event_frame = cof.walkFrameBool(data, vel_thres, angle_thres, dist_thres)
     event_frame = event_frame.iloc[start:end]
     event_index = cof.boolIndex(event_frame)  # (list) find frame where a mouse enters the center zone.
     event_velocity_2d = velocity_2d.loc[event_index]
