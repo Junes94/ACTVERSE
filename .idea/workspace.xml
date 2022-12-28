@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a334547a-75a5-46d1-9a12-957acc79bab3" name="Default Changelist" comment="walking criteria final2">
+    <list default="true" id="a334547a-75a5-46d1-9a12-957acc79bab3" name="Default Changelist" comment="walking criteria final_error fix">
+      <change afterPath="$PROJECT_DIR$/Project/proj_SDSBD_plot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Calculator/forUsers.py" beforeDir="false" afterPath="$PROJECT_DIR$/Calculator/forUsers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Calculator/openfield.py" beforeDir="false" afterPath="$PROJECT_DIR$/Calculator/openfield.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FileManager/csvload.py" beforeDir="false" afterPath="$PROJECT_DIR$/FileManager/csvload.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FileManager/preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/FileManager/preprocess.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Loader/csvloader.py" beforeDir="false" afterPath="$PROJECT_DIR$/Loader/csvloader.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project/package_june.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project/package_june.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test1.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/practice.py" beforeDir="false" afterPath="$PROJECT_DIR$/practice.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/practice2.py" beforeDir="false" afterPath="$PROJECT_DIR$/practice2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/proj_SDSBD.py" beforeDir="false" afterPath="$PROJECT_DIR$/proj_SDSBD.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,14 +47,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/MyPC/Documents/GitHub/ACTVERSE",
+    "settings.editor.selected.configurable": "debugger.dataViews.python.type.renderers"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\MyPC\Documents\GitHub\ACTVERSE" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\MyPC\Documents\GitHub\ACTVERSE\Plotting" />
       <recent name="C:\Users\MyPC\Documents\GitHub\ACTVERSE\FileManage" />
@@ -127,7 +138,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666689947895</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="walking criteria final_error fix">
+      <created>1668996938519</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1668996938519</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -171,6 +189,7 @@
     <MESSAGE value="walking criteria ver1." />
     <MESSAGE value="walking criteria final" />
     <MESSAGE value="walking criteria final2" />
-    <option name="LAST_COMMIT_MESSAGE" value="walking criteria final2" />
+    <MESSAGE value="walking criteria final_error fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="walking criteria final_error fix" />
   </component>
 </project>

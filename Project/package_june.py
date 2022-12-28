@@ -3,7 +3,7 @@ import FileManager.preprocess as app
 from Project.SDSBD import params
 
 
-def Avatar(data, eventType):
+def Avatar(data, eventType, start, end):
     """ This function is for AVATAR center entry analysis.
     This function is for AVATAR analysis
     :param data: AVATAR DataFrame (frame X 27 columns)
@@ -14,8 +14,6 @@ def Avatar(data, eventType):
     2. velocities
     """
     # basic variable settings
-    start = params.start
-    end = params.end
     torso_3d = data.iloc[:, 9:12]
 
     if eventType == 'center':

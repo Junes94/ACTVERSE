@@ -52,18 +52,18 @@ def rearingBool(data):
     return rearing
 
 
-# def rearingBool(data):
+# def rearingBool(data_pre):
 #     """
 #     This function (for AVATAR) returns boolean values at which frames a mouse rears
-#     :param data: (DataFrame) AVATAR csv data file
+#     :param data_pre: (DataFrame) AVATAR csv data_pre file
 #     :return: (Series) bool values when a mouse rears
 #     """
 #
 #     joint1 = [3, 4, 5]  # Set head-torso middle point as a body center point
 #     joint2 = [9, 10, 11]
-#     coord_z = app.centerPoint(data, joint1, joint2)
-#     leftHind_z = data.iloc[:, 4]
-#     rightHind_z = data.iloc[:, 17]
+#     coord_z = app.centerPoint(data_pre, joint1, joint2)
+#     leftHind_z = data_pre.iloc[:, 4]
+#     rightHind_z = data_pre.iloc[:, 17]
 #     thresJump = 2  # z coordinates(cm) of hindlimb exceed 'thresJump' will be considered as jumping
 #
 #     #
@@ -72,17 +72,17 @@ def rearingBool(data):
 #     return rearing
 #
 #
-# def jumpingBool(data):
+# def jumpingBool(data_pre):
 #     """
 #     This function (for AVATAR) returns boolean values at which frames a mouse jumps
-#     :param data: (DataFrame) AVATAR csv data file
+#     :param data_pre: (DataFrame) AVATAR csv data_pre file
 #     :return: (Series) bool values when a mouse jumps
 #     """
 #     joint1 = [3, 4, 5]  # Set head-torso middle point as a body center point
 #     joint2 = [9, 10, 11]
-#     centerPoint = app.centerPoint(data, joint1, joint2)
+#     centerPoint = app.centerPoint(data_pre, joint1, joint2)
 #     coord_z = centerPoint.iloc[:, [2]]
-#     anus_z = data.iloc[:, [8]]
+#     anus_z = data_pre.iloc[:, [8]]
 #     thresJump = 1  # z coordinates(cm) of anus_z exceed 'thresJump' will be considered as jumping
 #
 #     jumping = (coord_z.iloc[:, 0] > (coord_z.iloc[:, 0].mean(axis=0, skipna=False) * 2)) \
@@ -93,7 +93,7 @@ def rearingBool(data):
 def centerFrameBool(data, radius=3):
     """
     This function(for AVATAR) returns frames when a mouse enters the center zone
-    :param data:
+    :param data: (DataFrame) AVATAR csv data file
     :param radius: if radius=3, center zone would be (-3,-3)~(3,3) for x, y axis
     :return: (pd.Series) boolean results whether a mouse enters into the center zone
     """
@@ -101,8 +101,8 @@ def centerFrameBool(data, radius=3):
     joint2 = [9, 10, 11]
     coord_3d = app.centerPoint(data, joint1, joint2)  # set head-torso middle point as a body center point.
     coord_2d = coord_3d.iloc[:, 0:2]
-    centerpoint_x = coord_2d.iloc[:, 0]  # x coordinates of the data
-    centerpoint_y = coord_2d.iloc[:, 1]  # y coordinates of the data
+    centerpoint_x = coord_2d.iloc[:, 0]  # x coordinates of the data_pre
+    centerpoint_y = coord_2d.iloc[:, 1]  # y coordinates of the data_pre
     center_frame = (abs(centerpoint_x) < radius) & (abs(centerpoint_y) < radius)
     return center_frame
 
@@ -135,7 +135,7 @@ def walkFrameBool(data, vel_thres=0.1, angle_thres=90, dist_thres=5):
     criteria 3: Angle btw torso-head and torso, head forward direction vector.
     criteria 4: Moving distance of a walking bout (from the time it rises above the value until it falls again)
     must exceed dist_thres
-    :param data:
+    :param data: (DataFrame) AVATAR csv data file
     :param vel_thres:
     :param angle_thres: False if angle > angle_thres
     :param dist_thres: True if total distance moved at each walk bout > dist_thres
@@ -145,6 +145,7 @@ def walkFrameBool(data, vel_thres=0.1, angle_thres=90, dist_thres=5):
     torso_3d = data.iloc[:, 9:12]
     torso_2d = torso_3d.iloc[:, 0:2]
     torso_z = torso_3d.iloc[:, [2]]
+
     # Calculate vectors
     vector_head = head_2d.diff(axis=0)
     vector_torso = torso_2d.diff(axis=0)
@@ -158,7 +159,7 @@ def walkFrameBool(data, vel_thres=0.1, angle_thres=90, dist_thres=5):
     # criteria 2
     velocity_head = (vector_head ** 2).sum(axis=1, skipna=False) ** (1 / 2)  # (dx^2+dy^2)^(1/2)
     velocity_torso = (vector_torso ** 2).sum(axis=1, skipna=False) ** (1 / 2)  # (dx^2+dy^2)^(1/2)
-    walk2 = (velocity_head > vel_thres) & (velocity_torso > vel_thres)  # boolean values exceeding vel_thres
+    walk2 = (velocity_head > vel_thres) & (velocity_torso > vel_thres)  # boolean values whether exceeds vel_thres
 
     # criteria 3
     angle_headForward = pd.Series(list(map(ccb.angle_between, vector_torsoToHead.values, vector_head.values[1:, :])),
@@ -178,3 +179,45 @@ def walkFrameBool(data, vel_thres=0.1, angle_thres=90, dist_thres=5):
             walk4[walk_bout.groups[group_index]] = False
 
     return walk4
+
+
+def bodyLength(data):
+    """This function(for AVATAR) returns length (format:pd.Series) of head-torso + torso-anus"""
+    head_3d = data.iloc[:, 3:6]
+    torso_3d = data.iloc[:, 9:12]
+    anus_3d = data.iloc[:, 6:9]
+    vector_torsoToHead = pd.DataFrame(head_3d.values[:] - torso_3d.values[:],
+                                      columns=[name_A + '-' + name_B for name_A, name_B in
+                                               zip(list(head_3d.columns), list(torso_3d.columns))],
+                                      index=torso_3d.index)
+    vector_torsoToAnus = pd.DataFrame(anus_3d.values[:] - torso_3d.values[:],
+                                      columns=[name_A + '-' + name_B for name_A, name_B in
+                                               zip(list(anus_3d.columns), list(torso_3d.columns))],
+                                      index=torso_3d.index)
+    # length of each body part
+    len_torsoToHead = (vector_torsoToHead ** 2).sum(axis=1, skipna=False) ** (1 / 2)  # ((x-x)^2+(y-y)^2+(z-z)^2)(1/2)
+    len_torsoToAnus = (vector_torsoToAnus ** 2).sum(axis=1, skipna=False) ** (1 / 2)
+    len_body = len_torsoToHead + len_torsoToAnus
+
+    return len_body
+
+
+def bodyAngle(data):
+    """This function(for AVATAR) returns the angle (format:pd.Series) between head-torso vector & torso-anus vector"""
+    head_3d = data.iloc[:, 3:6]
+    torso_3d = data.iloc[:, 9:12]
+    anus_3d = data.iloc[:, 6:9]
+    vector_torsoToHead = pd.DataFrame(head_3d.values[:] - torso_3d.values[:],
+                                      columns=[name_A + '-' + name_B for name_A, name_B in
+                                               zip(list(head_3d.columns), list(torso_3d.columns))],
+                                      index=torso_3d.index)
+    vector_torsoToAnus = pd.DataFrame(anus_3d.values[:] - torso_3d.values[:],
+                                      columns=[name_A + '-' + name_B for name_A, name_B in
+                                               zip(list(anus_3d.columns), list(torso_3d.columns))],
+                                      index=torso_3d.index)
+
+    # angle_body = pd.DataFrame(list(map(ccb.angle_between, vector_torsoToHead.values, vector_torsoToAnus.values)),
+    #                           columns=['angle_body']) * 180/pi
+    angle_body = pd.Series(list(map(ccb.angle_between, vector_torsoToHead.values, vector_torsoToAnus.values))) * 180/pi
+
+    return angle_body

@@ -3,7 +3,7 @@ import pandas as pd
 
 
 def extract(data, row_start=0, row_end=None, analysis_cols=None):
-    # This function extracts specific rows and columns from data(iloc based).
+    # This function extracts specific rows and columns from data_pre(iloc based).
 
     # Example below.
     # data_list = results['data_list']     # list that contains DataFrame from csv files.
@@ -18,7 +18,7 @@ def extract(data, row_start=0, row_end=None, analysis_cols=None):
 
 
 def centerPoint(data, joint1, joint2):
-    # This function makes other coordinates(center point, etc...) using specific columns from data(iloc based).
+    # This function makes other coordinates(center point, etc...) using specific columns from data_pre(iloc based).
 
     # Example below.
     # data_list = results['data_list']     # list that contains DataFrame from csv files.

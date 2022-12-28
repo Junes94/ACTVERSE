@@ -4,8 +4,8 @@ from Calculation.Simple import Angular as angle
 
 
 # print(csvloader)
-# data = csvloader.avatarcsvloader('C:/Users/endyd/OneDrive/Onedrive-CK/OneDrive/Gradschool/Kaist/AVATAR/AVATAR_DATA_SET/1.OFT(WT-N=50)/raw/','H1.mat.csv_new')
-# print(data)
+# data_pre = csvloader.avatarcsvloader('C:/Users/endyd/OneDrive/Onedrive-CK/OneDrive/Gradschool/Kaist/AVATAR/AVATAR_DATA_SET/1.OFT(WT-N=50)/raw/','H1.mat.csv_new')
+# print(data_pre)
 
 testdata = adv_load.Easyavatarload()
 # testdata = adv_load.Easyfolderload('General')

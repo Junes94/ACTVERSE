@@ -9,12 +9,12 @@ def load(path=None, filelist_path=None):
     This function import AVATAR csv file as a DataFrame
     :param path: The folder path
     :param filelist_path: csv file name list (ex. ["C/Users/~~/mouse1.csv", "C/Users/~~/mouse2.csv"]
-    :return: dictionary -> [0]=data list, [1]=folder name analyzed, [2]=file name analyzed
+    :return: dictionary -> [0]=data_pre list, [1]=folder name analyzed, [2]=file name analyzed
     """
 
     if filelist_path is None:
-        filelist_path = easygui.fileopenbox(title="Select data files.", default=path, filetypes="*.csv", multiple=True)
-    path = os.path.dirname(filelist_path[0])  # total path containing data files.
+        filelist_path = easygui.fileopenbox(title="Select data_pre files.", default=path, filetypes="*.csv", multiple=True)
+    path = os.path.dirname(filelist_path[0])  # total path.
 
     # Naming indices of DataFrame as frame numbers.
     data_list = []
@@ -26,7 +26,7 @@ def load(path=None, filelist_path=None):
         data_individual.index.name = "frame"
         data_list.append(data_individual)
 
-        # Store data file name into a list.
+        # Store data_pre file name into a list.
         filename = os.path.basename(filelist_path[i])  # Extract only file name(not total path).
         data_namelist.append(filename)
 
@@ -40,7 +40,7 @@ def labeler(results, label=None):
     This function allocates specific column names to DataFrame.
     Be aware that when users enter their own labels in the easygui window, their formats would be string,
     even users write down numbers (1, 2, 3, etc, ...)
-    :param results: csv data file list [DataFrame, DataFrame, ...]
+    :param results: csv data_pre file list [DataFrame, DataFrame, ...]
     :param label: specific column names user wants to define
     :return: dictionary
     """
@@ -51,20 +51,20 @@ def labeler(results, label=None):
     if label is not None:  # If users enter 'label' already.
         pass
     else:  # If 'label' is empty.
-        msg = "Do you want your data columns to be labeled? \n \nIf click 'No', columns would be 0, 1, 2, ..."
+        msg = "Do you want your data_pre columns to be labeled? \n \nIf click 'No', columns would be 0, 1, 2, ..."
         choices = ["Yes", "No"]
         reply = easygui.buttonbox(msg, choices=choices)
-        if reply == "Yes":  # If users want their data columns have name.
+        if reply == "Yes":  # If users want their data_pre columns have name.
             msg = "Do you want to label columns manually? \n\nIf you click 'No', you can use default labeling."
             choices = ["Yes, manually", "No, auto-labeling"]
             manual_tf = easygui.buttonbox(msg, choices=choices)
             if manual_tf == "Yes, manually":
-                msg = "Enter data column names you want to assign."
+                msg = "Enter data_pre column names you want to assign."
                 title = "Manual labeling mode"
                 fieldnames = data.columns.tolist()  # list of the original names of columns.
                 label = easygui.multenterbox(msg, title, fieldnames)
             else:  # if users want to use default mode for labels.
-                msg = "Is your data from AVATAR, having 27 columns?"
+                msg = "Is your data_pre from AVATAR, having 27 columns?"
                 title = "Auto-labeling mode"
                 choices = ["Yes", "No"]
                 avatar_tf = easygui.buttonbox(msg, title, choices=choices)
@@ -74,7 +74,7 @@ def labeler(results, label=None):
                     separator = '_'
                     label = [separator.join(label_name) for label_name in list(product(label_joint, label_coord))]
                 else:  # allocate each name of joint coordinate to column as 'joint_coordinate'.
-                    msg = "How many joints and dimensions your data has.\nPlease write number only."
+                    msg = "How many joints and dimensions your data_pre has.\nPlease write number only."
                     fieldnames = ["Number of joints", "Number of dimensions(x,y,z)"]
                     # users write down the number of joints and coord.
                     label_number = easygui.multenterbox(msg, title, fieldnames)
@@ -88,7 +88,7 @@ def labeler(results, label=None):
                             easygui.msgbox("Data dimension could not exceed 3.", "Warning")
                             pass
                         else:
-                            msg = "Enter joints name your data has.\n\n For example, nose, head, ..."
+                            msg = "Enter joints name your data_pre has.\n\n For example, nose, head, ..."
                             # joint number to be filled in by users.
                             fieldnames = ['#'.join(x) for x in list(product(['Joint'], joint_numbering2))]
                             label_joint = easygui.multenterbox(msg, title, fieldnames)
@@ -105,10 +105,10 @@ def labeler(results, label=None):
                                 else:
                                     easygui.msgbox("There should be no blank in the joint list.", "Warning")
                                     pass
-        elif reply == "No":  # If users want their data columns don't have name.
+        elif reply == "No":  # If users want their data_pre columns don't have name.
             label = [x for x in range(data.shape[1])]
 
-    # Finally check whether label list is compatible with data columns.
+    # Finally check whether label list is compatible with data_pre columns.
     if label is not None:
         if len(label) == sum(x is not "" for x in label):  # There should be no blank.
             if len(label) == len(set(label)):  # There should be no duplicate elements.
@@ -124,7 +124,7 @@ def labeler(results, label=None):
                         break
                     success_number = success_number + 1
                 if success_number == range(len(data_namelist)):
-                    easygui.msgbox("Your data columns have labels now! \n\nIf you want to reset all labels, "
+                    easygui.msgbox("Your data_pre columns have labels now! \n\nIf you want to reset all labels, "
                                    "\nplease delete the second parameter of this function.", "Success")
                     pass
             else:
@@ -135,6 +135,6 @@ def labeler(results, label=None):
             pass
 
     print("data columns name:", data.columns.tolist())
-    results['data_list'] = data_list  # upgrade data with labels.
+    results['data_list'] = data_list  # upgrade data_pre with labels.
     results['label'] = label  # add label key to dictionary.
     return results

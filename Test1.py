@@ -7,7 +7,7 @@ import Calculator.openfield as cof
 path = "C:/Users/MyPC/Desktop/실험실/아바타/ACTNOVA회사/"
 results = acl.load(path)
 
-# If user fill this variable (ex. ['head_x','head_y',...]), data column will be automatically labeled.
+# If user fill this variable (ex. ['head_x','head_y',...]), data_pre column will be automatically labeled.
 label = None
 results = acl.labeler(results, label)
 data_list = copy.deepcopy(results['data_list'])     # list that contains DataFrame from csv files.

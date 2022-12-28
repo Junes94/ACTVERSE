@@ -24,7 +24,7 @@ def avatarcsvloader(pathrest, filename, givenpath ='C:/Users/endyd/OneDrive/ым╕ь
     try:
         27 == output.shape[1]
     except:
-        print('The number of columns are not 27; Check the data')
+        print('The number of columns are not 27; Check the data_pre')
     else:
         return output
 
